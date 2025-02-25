@@ -1,0 +1,19 @@
+comandos utilizados:
+
+sudo apt update 
+sudo apt install apache2
+sudo systemctl enable apache2
+sudo systemctl start apache2
+sudo systemctl status apache2
+cd /var/www/html
+ls
+rm -r index.html
+sudo nano index.html
+<html>
+<body>
+<h1> Información  </h1>
+</body>
+</html>
+cd /etc/apache2
+sudo nano ports.conf
+Sudo systemctl restart apache2
