@@ -1,0 +1,24 @@
+Comandos utilizados:
+
+Sudo apt install postfix 
+Systemctl start postfix
+Nano /etc/postfix/main.cf
+inet_interfaces = all
+mynetwork = 192.168.100.0/24
+
+ve hasta el final y en lo ultimo pon esto
+relayhost = [smtp.gmail.com]:587
+smtp_use_tls = yes
+smtp_tls_note_starttls_offer = yes
+smtp_sasl_auth_enable = yes
+smtp_sasl_password_maps = hash:/etc/postfix/sasl_passed
+smtp_sasl_security_options = noanonymous
+
+asegurate de borrar esta linea
+relayhost = smtp.localdomain
+
+sudo nano /etc/postfix/sasl_passed
+[smtp.gmail.com]:587 (correo):(contraseña)
+Chmod 600 /etc/postfix/sasl_passed
+postmap  /etc/postfix/sasl_passed
+echo “cuerpo” | mail -s “asunto del correo” correo al que quiero mandar el mensaje
