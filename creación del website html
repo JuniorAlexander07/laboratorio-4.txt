@@ -11,9 +11,28 @@ rm -r index.html
 sudo nano index.html
 <html>
 <body>
-<h1> Información  </h1>
+<h1> Hola mundo </h1>
 </body>
 </html>
+Cd /etc/apache2
+Ls
+Cd sites-available
+sudo nano practica1.conf
+
+<VirtualHost *:80>
+    ServerName practica1.local
+    DocumentRoot /var/www/html/
+
+    <Directory /var/www/html/>
+        AllowOverride All
+        Require all granted
+    </Directory>
+</VirtualHost>
+
 cd /etc/apache2
-sudo nano ports.conf
-Sudo systemctl restart apache2
+Sudo nano ports.conf
+Listen 80
+sudo nano /etc/hosts
+Donde dice host.local cambialo por practica1.local
+systemctl restart apache2
+sudo a2ensite practica1.conf
