@@ -1,0 +1,57 @@
+Servidor de impresion 
+
+sudo Apt install cups -y
+sudo apt install cups-pdf -y
+
+ Ahora vamos a instalar el firewall
+sudo apt install ufw -y
+
+iniciar el servicio cups y ufw:
+sudo systemctl start cups
+sudo ufw enable
+
+Ahora vamos a habilitar el puerto por donde se estará manejando la impresión con:
+sudo ufw allow 631/tcp
+
+Este es para la entrada del mismo
+sudo ufw allow ssh
+sudo ufw status 
+
+ejecutamos lo siguiente:
+sudo cupsctl –remote-admin –remote-any –share-printers
+sudo usermod -aG lpadmin $(whoami)
+sudo systemctl restart cups
+
+Ver y ip y copiar
+ifconfig 
+
+En el buscador de firefox  ponemos la ip
+192.168.100.115:631
+
+Vamos a administración 
+Ponemos nuestro usuario y contraseña:
+Usuario: root 
+Contraseña de la maquina virtual
+
+Añadimos una impresora
+Y le damos a cups pdf
+Siguiente
+Agregamos la url de la pagina misma
+Ponemos nombre prueba
+Descripción: Virtual PDF PRINTER
+Deja vacio la ubicación y dale a compartir impresora al check, luego siguiente
+En el tipo de impresora o marca ponlo en generic, le das siguiente
+En el modelo escoge la que dice Generic Text-only printer (en) y a añadir impresora
+Vamos donde dice impresoras
+Haz click donde dice prueba 
+Entramos a configuración de Windows 
+Le damos a Bluetooth y dispositivos y donde dice impresoras y escáneres
+Agregamos un dispositivo 
+Agregamos manualmente 
+Volvemos a copiar la url de la pagina web y lo pegamos, pero donde dice https le quitamos la s y la dejamos http, dale siguiente
+Escoge generic y aceptar 
+Le das a siguiente y luego a imprimir prueba 
+Vamos a un documento de Word y vamos a imprimirlo
+Ponemos lo que sea dentro del documento
+Le damos a imprimir 
+Luego vuelve a la pagina web para verificar  
