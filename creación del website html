@@ -5,19 +5,36 @@ sudo apt install apache2
 sudo systemctl enable apache2
 sudo systemctl start apache2
 sudo systemctl status apache2
+
+entramos a este directorio que es donde haremos nuestro archivo de conf:
 cd /var/www/html
 ls
-rm -r index.html
+
+si esta un archivo de conf por defecto es una plantilla, eliminala:
+sudo rm index.html
+
+crea tu propio archivo de conf:
 sudo nano index.html
+
+dentro pega lo siguiente:
+
 <html>
 <body>
 <h1> Hola mundo </h1>
 </body>
 </html>
-Cd /etc/apache2
-Ls
-Cd sites-available
+
+guardar y salir
+
+entramos al siguiente directorio:
+cd /etc/apache2
+ls
+cd sites-available
+
+aqui crearemos un archivo:
 sudo nano practica1.conf
+
+pegamos lo siguiente
 
 <VirtualHost *:80>
     ServerName practica1.local
@@ -29,10 +46,83 @@ sudo nano practica1.conf
     </Directory>
 </VirtualHost>
 
+guardamos y salimos.
+
+entramos al siguiente directorio:
+
 cd /etc/apache2
-Sudo nano ports.conf
+
+entramos al archivo de conf:
+sudo nano ports.conf
+
+lo ponemos que escuche en el puerto 80:
 Listen 80
+
+guardar y salir.
+
+entramos al siguiente archivo de conf:
 sudo nano /etc/hosts
+
 Donde dice host.local cambialo por practica1.local
+guardar y salir.
+
+reiniciamos el servicio para que se apliquen los cambios:
 systemctl restart apache2
+
+habilitar el website:
 sudo a2ensite practica1.conf
+
+ve al navegador de firefox y pon en la url
+127.0.0.1
+
+
+El segundo website: 
+
+clear
+cd /var/www/html
+Sudo nano index.html
+
+<html>
+<body>
+<h1> Nombre: Junior Alexander </h1>
+<h2> Matricula: 2024-1164 </h2>
+<h3>Materia: Sistemas Operativos III </h3>
+</body>
+</html>
+ Guardar y salir
+
+cd /etc/apache2/sites-available
+sudo nano practica1.conf
+
+Ponlo que escuche en el 8080
+Y en servername cambialo a practica2.local
+
+Cuando lo vayas a guardar guarda el archivo de configuración con el nombre practica2.conf con control+O guardas y sales
+
+para verificar el nombre
+ls
+
+borramos el anterior archivo de conf:
+sudo rm practica1.conf
+
+entramos al directorio apache2:
+cd /etc/apache2
+ls
+Sudo nano ports.conf
+Pon el puerto 8080
+Guardar y salir
+
+Sudo nano/etc/hosts
+Cambialo por practica2.local
+Guardar y salir
+
+reiniciamos el servicio para guardar cambios:
+systemctl restart apache2
+
+habilitar webisite:
+sudo a2ensite practica2.conf
+sudo systemctl reload apache2
+
+Ve a firefox y pon
+127.0.0.1:8080
+
