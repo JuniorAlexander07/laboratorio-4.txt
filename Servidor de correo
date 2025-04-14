@@ -1,24 +1,54 @@
 Comandos utilizados:
 
+instalamos el servicio postfix:
 Sudo apt install postfix 
-Systemctl start postfix
-Nano /etc/postfix/main.cf
-inet_interfaces = all
-mynetwork = 192.168.100.0/24
 
-ve hasta el final y en lo ultimo pon esto
-relayhost = [smtp.gmail.com]:587
-smtp_use_tls = yes
-smtp_tls_note_starttls_offer = yes
-smtp_sasl_auth_enable = yes
-smtp_sasl_password_maps = hash:/etc/postfix/sasl_passed
-smtp_sasl_security_options = noanonymous
+lo iniciamos:
+Systemctl start postfix
+Systemctl status postfix
+
+editamos el archivo de conf
+Nano /etc/postfix/main.cf
+
+vamos a buscar las siguientes lineas:
+inet_interfaces = all                   tiene que estar en all y descomenta la linea borrando el "#"
+mynetwork = 192.168.100.0/24            tambien lo descomentamos y agregamos nuestra red ip con su mascara, no borres toda la linea solo configura la ip y mascara y deja toda la linea intacta
+ 
+ve hasta el final y en lo ultimo pon esto:
+relayhost = [smtp.gmail.com]:587                                 utiliza el servicio gmail
+smtp_use_tls = yes                                               si quiere que haya cifrado que viajara por el protocolo
+smtp_tls_note_starttls_offer = yes                               si el servidor remoto soporta el servicio
+smtp_sasl_auth_enable = yes                                      se encarga de la autenticacion sasl
+smtp_sasl_password_maps = hash:/etc/postfix/sasl_passed          se encarga de la autenticacion donde viajara la informacion
+smtp_sasl_security_options = noanonymous                         que las conecciones no sean anonimas
 
 asegurate de borrar esta linea
 relayhost = smtp.localdomain
 
+guardar y salir.
+
+vamos a google desde la maquina windows y vamos a gestionar cuenta en nuestro perfil
+despues en el buscador ponemos acceder con contraseña de aplicaciones y entramos al apartado
+se abrira una ventana que dice "ayuda" y clickeamos donde dice "crea y gestiona contraseñas de aplicacion"
+si no te deja acceder crea una autenticacion en dos pasos y vuelve
+despues nos autenticamos y cuando por fin ya estemos en el apartado nos pedira "nombre de la aplicacion"
+ahi ponemos cualquier cosa "kali linux o lo que se te plazca poner"
+nos dara una contraseña y la copiamos (importante)
+
+vamos a la maquina linux y editemos un archivo de conf:
 sudo nano /etc/postfix/sasl_passed
-[smtp.gmail.com]:587 (correo):(contraseña)
+
+dentro del archivo vacio ponemos:
+[smtp.gmail.com]:587 (correo electronico personal):(contraseña que te dio google) pegado el correo electronico y contraseña con los dos puntos
+guardar y salir.
+
+le damos permisos:
 Chmod 600 /etc/postfix/sasl_passed
+
+ahora usamos postmap que convierte un archivo de texto a un archivo plano:
 postmap  /etc/postfix/sasl_passed
+
 echo “cuerpo” | mail -s “asunto del correo” correo al que quiero mandar el mensaje
+
+ejemplo:
+echo "mi nombre y matricula o una info que quieras mandar" | mail -s "el asunto ya sea asunto importante" y por ultimo el correo que recibira el imail fulano123@gmail.com"
